@@ -6,8 +6,10 @@ import {
   createConnections,
   getConnection,
   getConnectionManager,
+  useContainer,
 } from 'typeorm'
 import {HapiLogger} from './Logger'
+import {DefaultContainer} from './Container'
 
 const Pkg: {
   version: string,
@@ -38,6 +40,8 @@ const internal: {
 export const plugin: Plugin<Options> = {
   name: 'hapi-typeorm',
   register: async (server: Server, options: Options) => {
+    useContainer(new DefaultContainer(), { fallback: false, fallbackOnErrors: false })
+
     let connectionOptions: ConnectionOptions[] = options.connections
 
     connectionOptions = connectionOptions.map(conn => {
