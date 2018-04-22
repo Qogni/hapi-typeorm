@@ -3,6 +3,7 @@ import {
   Connection,
   ConnectionManager,
   ConnectionOptions,
+  ConnectionOptionsReader,
   createConnections,
   getConnection,
   getConnectionManager,
@@ -14,10 +15,6 @@ import {DefaultContainer} from './Container'
 const Pkg: {
   version: string,
 } = require('../package.json')
-
-export interface Options {
-  connections: ConnectionOptions[]
-}
 
 declare module 'hapi' {
   interface Request {
@@ -33,18 +30,44 @@ declare module 'hapi' {
   }
 }
 
-const internal: {
-  connections?: Connection[],
-} = {}
+export class Options {
+  configRoot: string
+  configName: string
+  connections: ConnectionOptions[]
+
+  private defaultOptions: Partial<Options> = {
+    configRoot: process.cwd(),
+    configName: 'ormconfig',
+    connections: [],
+  }
+
+  constructor(options: Partial<Options>) {
+    Object.assign(this, this.defaultOptions, options)
+  }
+}
 
 export const plugin: Plugin<Options> = {
   name: 'hapi-typeorm',
-  register: async (server: Server, options: Options) => {
+  register: async (server: Server, partialOptions: Partial<Options>) => {
     useContainer(new DefaultContainer(), { fallback: false, fallbackOnErrors: false })
 
-    let connectionOptions: ConnectionOptions[] = options.connections
+    const options = new Options(partialOptions)
 
-    connectionOptions = connectionOptions.map(conn => {
+    try {
+      const optionsReader = new ConnectionOptionsReader({
+        root: options.configRoot,
+        configName: options.configName,
+      })
+
+      server.log(['hapi-typeorm', 'config'], 'configRoot: ' + options.configRoot)
+      server.log(['hapi-typeorm', 'config'], 'configName: ' + options.configName)
+
+      options.connections = options.connections.concat(await optionsReader.all())
+    } catch (err) {
+      server.log(['hapi-typeorm', 'config', 'warning'], err.message)
+    }
+
+    options.connections = options.connections.map(conn => {
       if (conn.logging && conn.logger === undefined) {
         conn = {
           ...conn,
@@ -55,7 +78,7 @@ export const plugin: Plugin<Options> = {
       return conn
     })
 
-    internal.connections = await createConnections(connectionOptions)
+    await createConnections(options.connections)
 
     server.expose('connectionManager', getConnectionManager())
     server.expose('getConnection', getConnection)
