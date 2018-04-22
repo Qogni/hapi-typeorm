@@ -1,9 +1,9 @@
 {
   "name": "hapi-typeorm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hapi plugin for TypeORM.",
-  "main": "dist/Plugin.js",
-  "types": "dist/Plugin.d.ts",
+  "main": "lib/Plugin.js",
+  "types": "lib/Plugin.d.ts",
   "scripts": {
     "build": "tsc src/Plugin.ts -d -m 'commonjs' -t 'es2017' --outDir lib",
     "lint": "tslint ./src/**",
