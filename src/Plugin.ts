@@ -4,13 +4,8 @@ import {
   ConnectionManager,
   ConnectionOptions,
   ConnectionOptionsReader,
-  createConnections,
-  getConnection,
-  getConnectionManager,
-  useContainer,
 } from 'typeorm'
 import {HapiLogger} from './Logger'
-import {DefaultContainer} from './Container'
 
 const Pkg: {
   version: string,
@@ -49,8 +44,6 @@ export class Options {
 export const plugin: Plugin<Options> = {
   name: 'hapi-typeorm',
   register: async (server: Server, partialOptions: Partial<Options> = {}) => {
-    useContainer(new DefaultContainer(), { fallback: false, fallbackOnErrors: false })
-
     const options = new Options(partialOptions)
 
     try {
@@ -78,22 +71,30 @@ export const plugin: Plugin<Options> = {
       return conn
     })
 
-    await createConnections(options.connections)
+    const connectionManager = new ConnectionManager()
+    await options.connections.map(conn => connectionManager.create(conn)).reduce(
+      (a: Promise<any>, conn) => a.then(() => conn.connect()),
+      Promise.resolve(true),
+    )
 
-    server.expose('connectionManager', getConnectionManager())
-    server.expose('getConnection', getConnection)
+    const containerGetConnectionManager: () => ConnectionManager = () => connectionManager
+    const containerGetConnection = (name: string) => connectionManager.get(name)
+
+    server.expose('getConnectionManager', containerGetConnectionManager)
+    server.expose('getConnection', containerGetConnection)
 
     server.decorate(
       'request',
       'getConnectionManager',
-      getConnectionManager,
+      containerGetConnectionManager,
       {apply: true},
     )
 
     server.decorate(
       'request',
       'getConnection',
-      server.plugins['hapi-typeorm'].getConnection,
+      containerGetConnection,
+      {apply: true},
     )
   },
   version: Pkg.version,
