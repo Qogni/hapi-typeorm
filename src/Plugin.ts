@@ -48,7 +48,7 @@ export class Options {
 
 export const plugin: Plugin<Options> = {
   name: 'hapi-typeorm',
-  register: async (server: Server, partialOptions: Partial<Options>) => {
+  register: async (server: Server, partialOptions: Partial<Options> = {}) => {
     useContainer(new DefaultContainer(), { fallback: false, fallbackOnErrors: false })
 
     const options = new Options(partialOptions)
