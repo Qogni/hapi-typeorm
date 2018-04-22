@@ -1,6 +1,6 @@
 {
   "name": "hapi-typeorm",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Hapi plugin for TypeORM.",
   "main": "lib/Plugin.js",
   "types": "lib/Plugin.d.ts",
