@@ -8,7 +8,7 @@
     "prepublishOnly": "npm run lint && npm test && npm run build",
     "build": "tsc src/Plugin.ts -d -m 'commonjs' -t 'es2017' --outDir lib",
     "lint": "tslint ./src/**",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts --file test/utils/test-setup.ts --bail --color --verbose"
+    "test": "npm run build && mocha -r ts-node/register test/**/*.spec.ts --file test/utils/test-setup.ts --bail --color --verbose"
   },
   "keywords": [
     "hapi",

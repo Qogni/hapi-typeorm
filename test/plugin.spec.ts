@@ -1,23 +1,10 @@
 import 'reflect-metadata'
 import {expect} from 'chai'
-import {Server} from 'hapi'
-import * as HapyTypeOrm from '../src/Plugin'
+import {startServer} from './utils/helpers'
 import {Post} from './utils/entities/Post'
 import * as path from 'path'
 
 describe('basic plugin test', () => {
-  const startServer = async (pluginOptions: Partial<HapyTypeOrm.Options>) => {
-    const server = new Server()
-
-    await server.register([{
-      plugin: HapyTypeOrm.plugin,
-      options: pluginOptions,
-    }])
-
-    await server.start()
-
-    return server
-  }
 
   it('plugin registers, logging works', async () => {
     const server = await startServer({
