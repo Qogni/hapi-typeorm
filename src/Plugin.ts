@@ -13,14 +13,14 @@ const Pkg: {
 
 declare module 'hapi' {
   interface Request {
-    connectionManager: ConnectionManager
-    getConnection: (connectionName?: string) => Connection,
+    getConnectionManager: () => ConnectionManager
+    getConnection: (name?: string) => Connection,
   }
 
   interface PluginProperties {
     'hapi-typeorm': {
-      connectionManager: ConnectionManager
-      getConnection: (connectionName?: string) => Connection,
+      getConnectionManager: () => ConnectionManager
+      getConnection: (name?: string) => Connection,
     }
   }
 }
