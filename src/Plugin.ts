@@ -87,14 +87,12 @@ export const plugin: Plugin<Options> = {
       'request',
       'getConnectionManager',
       containerGetConnectionManager,
-      {apply: true},
     )
 
     server.decorate(
       'request',
       'getConnection',
       containerGetConnection,
-      {apply: true},
     )
   },
   version: Pkg.version,
