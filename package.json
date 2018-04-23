@@ -5,6 +5,7 @@
   "main": "lib/Plugin.js",
   "types": "lib/Plugin.d.ts",
   "scripts": {
+    "prepublishOnly": "npm run lint && npm test && npm run build",
     "build": "tsc src/Plugin.ts -d -m 'commonjs' -t 'es2017' --outDir lib",
     "lint": "tslint ./src/**",
     "test": "mocha -r ts-node/register test/**/*.spec.ts --file test/utils/test-setup.ts --bail --color --verbose"
