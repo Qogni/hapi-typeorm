@@ -78,7 +78,7 @@ export const plugin: Plugin<Options> = {
     )
 
     const containerGetConnectionManager: () => ConnectionManager = () => connectionManager
-    const containerGetConnection = (name: string) => connectionManager.get(name)
+    const containerGetConnection = (name?: string) => connectionManager.get(name)
 
     server.expose('getConnectionManager', containerGetConnectionManager)
     server.expose('getConnection', containerGetConnection)
