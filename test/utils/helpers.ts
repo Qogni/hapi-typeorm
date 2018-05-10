@@ -1,4 +1,4 @@
-import * as HapyTypeOrm from './../../lib/Plugin'
+import * as HapyTypeOrm from './../../src/Plugin'
 import {Server} from 'hapi'
 
 export const startServer = async (pluginOptions: Partial<HapyTypeOrm.Options>) => {

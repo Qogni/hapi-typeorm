@@ -8,7 +8,7 @@
     "prepublishOnly": "npm run lint && npm test && npm run build",
     "build": "tsc src/Plugin.ts -d -m 'commonjs' -t 'es2017' --outDir lib",
     "lint": "tslint ./src/**",
-    "test": "npm run build && mocha -r ts-node/register test/**/*.spec.ts --file test/utils/test-setup.ts --bail --color --verbose"
+    "test": "jest"
   },
   "keywords": [
     "hapi",
@@ -19,19 +19,13 @@
   "author": "Rodrigo Saboya",
   "license": "MIT",
   "devDependencies": {
-    "@types/chai-as-promised": "^7.1.0",
     "@types/hapi": "^17.0.10",
-    "@types/mocha": "^5.2.0",
-    "@types/source-map-support": "^0.4.0",
-    "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
+    "@types/jest": "^22.2.3",
     "hapi": "^17.3.1",
-    "mocha": "^5.1.1",
-    "source-map-support": "^0.5.4",
+    "jest": "^22.4.3",
     "sqlite3": "^4.0.0",
-    "ts-node": "^6.0.0",
+    "ts-jest": "^22.4.5",
     "tslint": "^5.9.1",
-    "tslint-no-unused-expression-chai": "^0.1.3",
     "typeorm": "^0.2.0",
     "typescript": "^2.8.3"
   },
@@ -40,5 +34,23 @@
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "/test/.*?\\.spec\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

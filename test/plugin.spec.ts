@@ -1,5 +1,3 @@
-import 'reflect-metadata'
-import {expect} from 'chai'
 import {startServer} from './utils/helpers'
 import {Post} from './utils/entities/Post'
 import * as path from 'path'
@@ -13,11 +11,9 @@ describe('basic plugin test', () => {
     })
 
     const postRepository = server.plugins['hapi-typeorm'].getConnection('default').getRepository(Post)
-    let logCount = 0
 
-    server.events.on('log', (event, tags) => {
-      logCount++
-    })
+    const spy = jest.fn()
+    server.events.on('log', spy)
 
     const newPost = new Post()
     newPost.text = 'Hello post'
@@ -25,12 +21,12 @@ describe('basic plugin test', () => {
     newPost.likesCount = 0
     const savedPost = await postRepository.save(newPost)
 
-    savedPost.should.be.equal(newPost)
-    expect(savedPost.id).not.to.be.null
-    expect(logCount).to.be.greaterThan(0)
+    expect(savedPost).toEqual(newPost)
+    expect(savedPost.id).not.toBeNull()
+    expect(spy).toHaveBeenCalled()
 
     const insertedPost = await postRepository.findOne(savedPost.id)
-    insertedPost!.should.be.eql({
+    expect(insertedPost).toMatchObject({
       id: savedPost.id,
       text: 'Hello post',
       title: 'this is post title',
@@ -54,11 +50,9 @@ describe('basic plugin test', () => {
     })
 
     const postRepository = server.plugins['hapi-typeorm'].getConnection('default').getRepository(Post)
-    let logCount = 0
 
-    server.events.on('log', (event, tags) => {
-      logCount++
-    })
+    const spy = jest.fn()
+    server.events.on('log', spy)
 
     const newPost = new Post()
     newPost.text = 'Hello post'
@@ -66,12 +60,12 @@ describe('basic plugin test', () => {
     newPost.likesCount = 0
     const savedPost = await postRepository.save(newPost)
 
-    savedPost.should.be.equal(newPost)
-    expect(savedPost.id).not.to.be.null
-    expect(logCount).to.be.greaterThan(0)
+    expect(savedPost).toEqual(newPost)
+    expect(savedPost.id).not.toBeNull()
+    expect(spy).toHaveBeenCalled()
 
     const insertedPost = await postRepository.findOne(savedPost.id)
-    insertedPost!.should.be.eql({
+    expect(insertedPost).toMatchObject({
       id: savedPost.id,
       text: 'Hello post',
       title: 'this is post title',

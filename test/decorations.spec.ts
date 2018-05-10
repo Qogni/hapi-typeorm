@@ -1,5 +1,3 @@
-import 'reflect-metadata'
-import {expect} from 'chai'
 import {
   Connection,
   ConnectionManager,
@@ -19,10 +17,10 @@ describe('basic plugin test', () => {
     const defaultConnection = server.plugins['hapi-typeorm'].getConnection('default')
     const connectionManager = server.plugins['hapi-typeorm'].getConnectionManager()
 
-    expect(noArgument).to.be.instanceOf(Connection)
-    expect(defaultConnection).to.be.instanceOf(Connection)
-    expect(connectionManager).to.be.instanceOf(ConnectionManager)
-    expect(noArgument).to.equal(defaultConnection)
+    expect(noArgument).toBeInstanceOf(Connection)
+    expect(defaultConnection).toBeInstanceOf(Connection)
+    expect(connectionManager).toBeInstanceOf(ConnectionManager)
+    expect(noArgument).toEqual(defaultConnection)
 
     return server.stop()
   })
@@ -33,9 +31,9 @@ describe('basic plugin test', () => {
       configName: 'jsconfig',
     })
 
-    let noArgument
-    let defaultConnection
-    let connectionManager
+    let noArgument: Connection | undefined
+    let defaultConnection: Connection | undefined
+    let connectionManager: ConnectionManager | undefined
 
     server.route({
       method: 'GET',
@@ -54,10 +52,10 @@ describe('basic plugin test', () => {
       url: '/test',
     })
 
-    expect(noArgument).to.be.instanceOf(Connection)
-    expect(defaultConnection).to.be.instanceOf(Connection)
-    expect(connectionManager).to.be.instanceOf(ConnectionManager)
-    expect(noArgument).to.equal(defaultConnection)
+    expect(noArgument).toBeInstanceOf(Connection)
+    expect(defaultConnection).toBeInstanceOf(Connection)
+    expect(connectionManager).toBeInstanceOf(ConnectionManager)
+    expect(noArgument).toEqual(defaultConnection)
 
     return server.stop()
   })
