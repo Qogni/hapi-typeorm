@@ -19,15 +19,15 @@
   "author": "Rodrigo Saboya",
   "license": "MIT",
   "devDependencies": {
-    "@types/hapi": "^17.0.10",
-    "@types/jest": "^22.2.3",
-    "hapi": "^17.3.1",
-    "jest": "^22.4.3",
-    "sqlite3": "^4.0.0",
-    "ts-jest": "^22.4.5",
-    "tslint": "^5.9.1",
-    "typeorm": "^0.2.0",
-    "typescript": "^2.8.3"
+    "@types/hapi": "^17.6.3",
+    "@types/jest": "^23.3.9",
+    "hapi": "^17.7.0",
+    "jest": "^23.6.0",
+    "sqlite3": "^4.0.4",
+    "ts-jest": "^23.10.4",
+    "tslint": "^5.11.0",
+    "typeorm": "^0.2.9",
+    "typescript": "^3.1.6"
   },
   "peerDependencies": {
     "typeorm": "^0.2.0"
