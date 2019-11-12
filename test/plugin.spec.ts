@@ -41,7 +41,7 @@ describe('basic plugin test', () => {
       connections: [{
         name: 'default',
         type: 'sqlite',
-        database: 'temp/sqlitedb.db',
+        database: ':memory:',
         logging: true,
         entities: ['test/utils/entities/**/*.ts'],
         synchronize: true,

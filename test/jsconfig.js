@@ -1,7 +1,7 @@
 module.exports = {
   name: 'default',
   type: 'sqlite',
-  database: '../temp/sqlitedbaaa.db',
+  database: ':memory:',
   logging: true,
   entities: ['test/utils/entities/**/*.ts'],
   synchronize: true,
