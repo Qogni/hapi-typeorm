@@ -1,4 +1,4 @@
-import {Server} from 'hapi'
+import {Server} from '@hapi/hapi'
 import {Logger, QueryRunner} from 'typeorm'
 
 export class HapiLogger implements Logger {

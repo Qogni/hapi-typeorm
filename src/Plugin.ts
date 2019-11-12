@@ -1,4 +1,4 @@
-import {Plugin, Server} from 'hapi'
+import {Plugin, Server} from '@hapi/hapi'
 import {
   Connection,
   ConnectionManager,
@@ -11,7 +11,7 @@ const Pkg: {
   version: string,
 } = require('../package.json')
 
-declare module 'hapi' {
+declare module '@hapi/hapi' {
   interface Request {
     getConnectionManager: () => ConnectionManager
     getConnection: (name?: string) => Connection,

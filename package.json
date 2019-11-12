@@ -1,6 +1,6 @@
 {
   "name": "hapi-typeorm",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Hapi plugin for TypeORM.",
   "main": "lib/Plugin.js",
   "types": "lib/Plugin.d.ts",
@@ -19,18 +19,18 @@
   "author": "Rodrigo Saboya",
   "license": "MIT",
   "devDependencies": {
-    "@types/hapi": "^17.6.3",
-    "@types/jest": "^23.3.9",
-    "hapi": "^17.7.0",
-    "jest": "^23.6.0",
-    "sqlite3": "^4.0.4",
-    "ts-jest": "^23.10.4",
+    "@types/hapi__hapi": "^18.2.6",
+    "@types/jest": "^24.0.22",
+    "@hapi/hapi": "^18.4.0",
+    "jest": "^24.9.0",
+    "sqlite3": "^4.1.0",
+    "ts-jest": "^24.1.0",
     "tslint": "^5.11.0",
-    "typeorm": "^0.2.9",
-    "typescript": "^3.1.6"
+    "typeorm": "^0.2.20",
+    "typescript": "^3.7.2"
   },
   "peerDependencies": {
-    "typeorm": "^0.2.0"
+    "typeorm": "^0.2.28"
   },
   "engines": {
     "node": ">=8.0.0"
