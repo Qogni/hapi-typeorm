@@ -13,7 +13,7 @@ describe('basic plugin test', () => {
       configName: 'jsconfig',
     })
 
-    const noArgument = server.plugins['hapi-typeorm'].getConnection('default')
+    const noArgument = server.plugins['hapi-typeorm'].getConnection()
     const defaultConnection = server.plugins['hapi-typeorm'].getConnection('default')
     const connectionManager = server.plugins['hapi-typeorm'].getConnectionManager()
 
