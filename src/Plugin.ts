@@ -1,26 +1,25 @@
-import {Plugin, Server} from '@hapi/hapi'
+import { Plugin, Server } from '@hapi/hapi'
 import {
   Connection,
   ConnectionManager,
   ConnectionOptions,
   ConnectionOptionsReader,
 } from 'typeorm'
-import {HapiLogger} from './Logger'
+import { HapiLogger } from './Logger'
 
-const Pkg: {
-  version: string,
-} = require('../package.json')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Pkg: { version: string } = require('../package.json')
 
 declare module '@hapi/hapi' {
   interface Request {
     getConnectionManager: () => ConnectionManager
-    getConnection: (name?: string) => Connection,
+    getConnection: (name?: string) => Connection
   }
 
   interface PluginProperties {
     'hapi-typeorm': {
       getConnectionManager: () => ConnectionManager
-      getConnection: (name?: string) => Connection,
+      getConnection: (name?: string) => Connection
     }
   }
 }
@@ -30,13 +29,13 @@ export class Options {
   configName: string
   connections: ConnectionOptions[]
 
-  private defaultOptions: Partial<Options> = {
+  private readonly defaultOptions: Partial<Options> = {
     configRoot: process.cwd(),
     configName: 'ormconfig',
     connections: [],
   }
 
-  constructor(options: Partial<Options>) {
+  constructor (options: Partial<Options>) {
     Object.assign(this, this.defaultOptions, options)
   }
 }
@@ -61,7 +60,7 @@ export const plugin: Plugin<Options> = {
     }
 
     options.connections = options.connections.map(conn => {
-      if (conn.logging && conn.logger === undefined) {
+      if (conn.logging !== undefined && conn.logger === undefined) {
         conn = {
           ...conn,
           logger: new HapiLogger(server),
@@ -73,12 +72,12 @@ export const plugin: Plugin<Options> = {
 
     const connectionManager = new ConnectionManager()
     await options.connections.map(conn => connectionManager.create(conn)).reduce(
-      (a: Promise<any>, conn) => a.then(() => conn.connect()),
+      async (a: Promise<any>, conn) => a.then(async () => conn.connect()),
       Promise.resolve(true),
     )
 
     const containerGetConnectionManager: () => ConnectionManager = () => connectionManager
-    const containerGetConnection = (name?: string) => connectionManager.get(name)
+    const containerGetConnection = (name?: string): Connection => connectionManager.get(name)
 
     server.expose('getConnectionManager', containerGetConnectionManager)
     server.expose('getConnection', containerGetConnection)
