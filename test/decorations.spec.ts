@@ -2,11 +2,10 @@ import {
   Connection,
   ConnectionManager,
 } from 'typeorm'
-import {startServer} from './utils/helpers'
+import { startServer } from './utils/helpers'
 import * as path from 'path'
 
 describe('basic plugin test', () => {
-
   it('server decorations work', async () => {
     const server = await startServer({
       configRoot: path.join(process.cwd(), 'test'),

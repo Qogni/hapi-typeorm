@@ -1,7 +1,7 @@
 import * as HapyTypeOrm from './../../src/Plugin'
-import {Server} from '@hapi/hapi'
+import { Server } from '@hapi/hapi'
 
-export const startServer = async (pluginOptions: Partial<HapyTypeOrm.Options>) => {
+export const startServer = async (pluginOptions: Partial<HapyTypeOrm.Options>): Promise<Server> => {
   const server = new Server()
 
   await server.register([{
