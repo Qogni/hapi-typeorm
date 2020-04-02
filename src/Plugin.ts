@@ -72,6 +72,7 @@ export const plugin: Plugin<Options> = {
 
     const connectionManager = new ConnectionManager()
     await options.connections.map(conn => connectionManager.create(conn)).reduce(
+      // eslint-disable-next-line @typescript-eslint/return-await
       async (a: Promise<any>, conn) => a.then(async () => conn.connect()),
       Promise.resolve(true),
     )
