@@ -18,6 +18,13 @@
   ],
   "author": "Rodrigo Saboya",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qogni/hapi-typeorm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qogni/hapi-typeorm/issues"
+  },
   "devDependencies": {
     "@hapi/hapi": "^19.1.1",
     "@types/hapi__hapi": "^19.0.2",
