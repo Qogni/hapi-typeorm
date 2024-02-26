@@ -1,5 +1,5 @@
 import {
-  Connection,
+  DataSource,
   ConnectionManager,
 } from 'typeorm'
 import { startServer } from './utils/helpers'
@@ -16,12 +16,12 @@ describe('basic plugin test', () => {
     const defaultConnection = server.plugins['hapi-typeorm'].getConnection('default')
     const connectionManager = server.plugins['hapi-typeorm'].getConnectionManager()
 
-    expect(noArgument).toBeInstanceOf(Connection)
-    expect(defaultConnection).toBeInstanceOf(Connection)
+    expect(noArgument).toBeInstanceOf(DataSource)
+    expect(defaultConnection).toBeInstanceOf(DataSource)
     expect(connectionManager).toBeInstanceOf(ConnectionManager)
     expect(noArgument).toEqual(defaultConnection)
 
-    return server.stop()
+    await server.stop()
   })
 
   it('request decorations work', async () => {
@@ -30,8 +30,8 @@ describe('basic plugin test', () => {
       configName: 'jsconfig',
     })
 
-    let noArgument: Connection | undefined
-    let defaultConnection: Connection | undefined
+    let noArgument: DataSource | undefined
+    let defaultConnection: DataSource | undefined
     let connectionManager: ConnectionManager | undefined
 
     server.route({
@@ -51,11 +51,11 @@ describe('basic plugin test', () => {
       url: '/test',
     })
 
-    expect(noArgument).toBeInstanceOf(Connection)
-    expect(defaultConnection).toBeInstanceOf(Connection)
+    expect(noArgument).toBeInstanceOf(DataSource)
+    expect(defaultConnection).toBeInstanceOf(DataSource)
     expect(connectionManager).toBeInstanceOf(ConnectionManager)
     expect(noArgument).toEqual(defaultConnection)
 
-    return server.stop()
+    await server.stop()
   })
 })

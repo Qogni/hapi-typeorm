@@ -1,9 +1,8 @@
-import {startServer} from './utils/helpers'
-import {Post} from './utils/entities/Post'
+import { startServer } from './utils/helpers'
+import { Post } from './utils/entities/Post'
 import * as path from 'path'
 
 describe('basic plugin test', () => {
-
   it('plugin registers, logging works', async () => {
     const server = await startServer({
       configRoot: path.join(process.cwd(), 'test'),
@@ -25,7 +24,7 @@ describe('basic plugin test', () => {
     expect(savedPost.id).not.toBeNull()
     expect(spy).toHaveBeenCalled()
 
-    const insertedPost = await postRepository.findOne(savedPost.id)
+    const insertedPost = await postRepository.findOne({ where: { id: savedPost.id } })
     expect(insertedPost).toMatchObject({
       id: savedPost.id,
       text: 'Hello post',
@@ -33,7 +32,7 @@ describe('basic plugin test', () => {
       likesCount: 0,
     })
 
-    return server.stop()
+    await server.stop()
   })
 
   it('plugin registers, logging works', async () => {
@@ -64,7 +63,7 @@ describe('basic plugin test', () => {
     expect(savedPost.id).not.toBeNull()
     expect(spy).toHaveBeenCalled()
 
-    const insertedPost = await postRepository.findOne(savedPost.id)
+    const insertedPost = await postRepository.findOne({ where: { id: savedPost.id } })
     expect(insertedPost).toMatchObject({
       id: savedPost.id,
       text: 'Hello post',
@@ -72,6 +71,6 @@ describe('basic plugin test', () => {
       likesCount: 0,
     })
 
-    return server.stop()
+    await server.stop()
   })
 })

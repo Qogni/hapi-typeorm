@@ -1,9 +1,9 @@
-import { Plugin, Server } from '@hapi/hapi'
+import { type Plugin, type Server } from '@hapi/hapi'
 import {
-  Connection,
   ConnectionManager,
-  ConnectionOptions,
+  type ConnectionOptions,
   ConnectionOptionsReader,
+  type DataSource,
 } from 'typeorm'
 import { HapiLogger } from './Logger'
 
@@ -13,13 +13,13 @@ const Pkg: { version: string } = require('../package.json')
 declare module '@hapi/hapi' {
   interface Request {
     getConnectionManager: () => ConnectionManager
-    getConnection: (name?: string) => Connection
+    getConnection: (name?: string) => DataSource
   }
 
   interface PluginProperties {
     'hapi-typeorm': {
       getConnectionManager: () => ConnectionManager
-      getConnection: (name?: string) => Connection
+      getConnection: (name?: string) => DataSource
     }
   }
 }
@@ -40,6 +40,8 @@ export class Options {
   }
 }
 
+type LogMsg = Parameters<Server['log']>[1]
+
 export const plugin: Plugin<Options> = {
   name: 'hapi-typeorm',
   register: async (server: Server, partialOptions: Partial<Options> = {}) => {
@@ -56,7 +58,7 @@ export const plugin: Plugin<Options> = {
 
       options.connections = options.connections.concat(await optionsReader.all())
     } catch (err) {
-      server.log(['hapi-typeorm', 'config', 'warning'], err.message)
+      server.log(['hapi-typeorm', 'config', 'warning'], err.message as LogMsg)
     }
 
     options.connections = options.connections.map(conn => {
@@ -78,7 +80,7 @@ export const plugin: Plugin<Options> = {
     )
 
     const containerGetConnectionManager: () => ConnectionManager = () => connectionManager
-    const containerGetConnection = (name?: string): Connection => connectionManager.get(name)
+    const containerGetConnection = (name?: string): DataSource => connectionManager.get(name)
 
     server.expose('getConnectionManager', containerGetConnectionManager)
     server.expose('getConnection', containerGetConnection)

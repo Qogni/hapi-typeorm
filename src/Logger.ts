@@ -1,5 +1,7 @@
-import { Server } from '@hapi/hapi'
-import { Logger, QueryRunner } from 'typeorm'
+import type { Server } from '@hapi/hapi'
+import type { Logger, QueryRunner } from 'typeorm'
+
+type LogMsgType = Parameters<HapiLogger['server']['log']>[1]
 
 export class HapiLogger implements Logger {
   private readonly server: Server
@@ -8,7 +10,7 @@ export class HapiLogger implements Logger {
     this.server = server
   }
 
-  public log (level: 'log' | 'info' | 'warn', message: any, queryRunner?: QueryRunner): any {
+  public log (level: 'log' | 'info' | 'warn', message: LogMsgType, queryRunner?: QueryRunner): any {
     this.server.log(['hapi-typeorm', level], message)
   }
 

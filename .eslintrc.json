@@ -6,6 +6,6 @@
   },
   "rules": {
     "@typescript-eslint/require-await": 1,
-    "comma-dangle": ["error", "always-multiline"]
+    "@typescript-eslint/comma-dangle": [2, "always-multiline"]
   }
 }
