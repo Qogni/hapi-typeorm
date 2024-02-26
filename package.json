@@ -28,6 +28,7 @@
   "devDependencies": {
     "@hapi/hapi": "^21.3.3",
     "@types/jest": "^29.5.12",
+    "@types/joi": "^17.2.3",
     "@types/node": "^20.11.20",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
