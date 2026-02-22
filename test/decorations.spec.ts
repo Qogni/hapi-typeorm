@@ -37,7 +37,7 @@ describe('basic plugin test', () => {
     server.route({
       method: 'GET',
       path: '/test',
-      handler: (request, h) => {
+      handler: (request, _h) => {
         noArgument = request.getConnection()
         defaultConnection = request.getConnection('default')
         connectionManager = request.getConnectionManager()
