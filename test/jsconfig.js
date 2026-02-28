@@ -1,6 +1,6 @@
 module.exports = {
   name: 'default',
-  type: 'sqlite',
+  type: 'better-sqlite3',
   database: ':memory:',
   logging: true,
   entities: ['test/utils/entities/**/*.ts'],
